@@ -29,7 +29,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:ems="10"
-            android:hint="ID"
+            android:hint="@string/sign_id"
             android:inputType="text"
             android:text="" />
 
@@ -38,7 +38,7 @@
             android:layout_width="245dp"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="PW"
+            android:hint="@string/sign_pw"
             android:inputType="textPassword"
             android:text=""
             android:layout_gravity="center" />
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:text="로그인" />
+                android:text="@string/sign_login" />
 
             <Button
                 android:id="@+id/btn_signup"
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:text="회원가입" />
+                android:text="@string/sign_signUp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
