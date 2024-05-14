@@ -1,12 +1,11 @@
 package com.example.i_care;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class Sign_signup extends AppCompatActivity {
 
@@ -16,10 +15,14 @@ public class Sign_signup extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sign_signup);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        TextView privacyPolicyText = findViewById(R.id.text_privacy_policy);
+        privacyPolicyText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 개인정보 처리방침 다이얼로그를 표시
+                PrivacyPolicyDialog privacyPolicyDialog = new PrivacyPolicyDialog();
+                privacyPolicyDialog.show(getSupportFragmentManager(), "privacyPolicyDialog");
+            }
         });
     }
 }

@@ -7,37 +7,61 @@
     android:layout_height="match_parent">
 
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/sign_signUp"
+        android:textSize="48sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.109">
+        app:layout_constraintVertical_bias="0.006" />
 
-        <TextView
-            android:id="@+id/textView2"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_signUp"
-            android:textSize="48sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editTextText3"
-            android:layout_width="245dp"
-            android:layout_height="50dp"
-            android:ems="10"
-            android:hint="@string/sign_id"
-            android:inputType="text" />
+            <EditText
+                android:id="@+id/editTextText3"
+                android:layout_width="245dp"
+                android:layout_height="50dp"
+                android:autofillHints="name"
+                android:ems="10"
+                android:hint="@string/sign_id"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="중복확인" />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/editTextTextPassword2"
             android:layout_width="245dp"
             android:layout_height="50dp"
+            android:autofillHints="password"
             android:ems="10"
             android:hint="@string/sign_pw"
             android:inputType="textPassword" />
@@ -49,6 +73,53 @@
             android:ems="10"
             android:hint="@string/sign_rePw"
             android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/editTextText4"
+            android:layout_width="245dp"
+            android:layout_height="50dp"
+            android:autofillHints="phone"
+            android:ems="10"
+            android:hint="전화번호"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/editTextText2"
+            android:layout_width="245dp"
+            android:layout_height="50dp"
+            android:autofillHints="emailAddress"
+            android:ems="10"
+            android:hint="이메일"
+            android:inputType="textEmailAddress" />
+
+        <LinearLayout
+            android:layout_width="245dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkbox_privacy"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/text_privacy_policy"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="개인정보 처리방침 동의"
+                android:textAllCaps="false"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:text="@string/sign_signUp" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
