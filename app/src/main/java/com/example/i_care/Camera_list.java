@@ -1,0 +1,55 @@
+package com.example.i_care;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
+public class Camera_list extends RecyclerView.Adapter<Camera_list.MyViewHolder> {
+
+    private List<CameraItem> mData;
+
+    public Camera_list(List<CameraItem> data) {
+        this.mData = data;
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_camera_list, parent, false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        CameraItem item = mData.get(position);
+        holder.camera_img.setImageResource(item.getCamImg());
+        holder.camera_name.setText(item.getCamName());
+        holder.camera_status.setText(item.getCamStatus());
+    }
+
+    @Override
+    public int getItemCount() {
+        return mData.size();
+    }
+
+    static class MyViewHolder extends RecyclerView.ViewHolder {
+        ImageView camera_img;
+        TextView camera_name;
+        TextView camera_status;
+
+        MyViewHolder(View itemView) {
+            super(itemView);
+            camera_img = itemView.findViewById(R.id.camera_img);
+            camera_name = itemView.findViewById(R.id.camera_name);
+            camera_status = itemView.findViewById(R.id.camera_status);
+
+        }
+    }
+}

@@ -26,9 +26,15 @@ public class Sign_login extends AppCompatActivity {
     }
 
     // 버튼 클릭 이벤트 처리 메서드
-    public void moveToSecondActivity(View view) {
+    public void moveToSignup(View view) {
         // Intent를 사용하여 다음 액티비티로 이동
         Intent intent = new Intent(this, Sign_signup.class);
+        startActivity(intent);
+    }
+
+    // 로그인에 성공하면 메인 화면으로 이동
+    public void moveToMain(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }
