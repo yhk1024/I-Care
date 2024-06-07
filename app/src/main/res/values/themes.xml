@@ -2,8 +2,15 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.ICare" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- 액션바 배경색 -->
+         <item name="colorPrimary">@color/main_color</item>
     </style>
 
     <style name="Theme.ICare" parent="Base.Theme.ICare" />
+    <style name="Theme.ICare.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.ICare.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.ICare.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

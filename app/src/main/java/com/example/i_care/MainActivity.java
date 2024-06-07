@@ -1,6 +1,10 @@
 package com.example.i_care;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,5 +33,22 @@ public class MainActivity extends AppCompatActivity {
 
         Camera_list adapter = new Camera_list(data);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings) {  // 상수 값 사용
+            // 설정 버튼 클릭 시 동작
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
