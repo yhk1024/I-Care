@@ -80,7 +80,7 @@
             android:layout_height="50dp"
             android:autofillHints="phone"
             android:ems="10"
-            android:hint="전화번호"
+            android:hint="@string/sign_phone"
             android:inputType="phone" />
 
         <EditText
@@ -89,7 +89,7 @@
             android:layout_height="50dp"
             android:autofillHints="emailAddress"
             android:ems="10"
-            android:hint="이메일"
+            android:hint="@string/sign_email"
             android:inputType="textEmailAddress" />
 
         <LinearLayout

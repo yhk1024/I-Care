@@ -5,7 +5,11 @@
     <string name="sign_id">아이디</string>
     <string name="sign_pw">비밀번호</string>
     <string name="sign_rePw">비밀번호 재확인</string>
-    <string name="title_activity_menu">Menu</string>
+    <string name="sign_phone">전화번호</string>
+    <string name="sign_email">이메일</string>
+    <string name="sign_check">회원정보</string>
+    <string name="sign_edit">회원정보 수정</string>
+    <string name="title_activity_main2">MainActivity2</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

@@ -1,21 +1,28 @@
 package com.example.i_care;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,23 +37,25 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 3; i++) {
             data.add(new CameraItem(R.drawable.ic_launcher_foreground, "카메라" + (i+1), "활성화" + (i+1)));
         }
-
+        //카메라 리스트 출력
         Camera_list adapter = new Camera_list(data);
         recyclerView.setAdapter(adapter);
+
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true); // 왼쪽 상단 버튼 만들기
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_settings); //왼쪽 상단 버튼 아이콘 지정
+
+        drawerLayout = (DrawerLayout)findViewById(R.id.main);
+        navigationView = (NavigationView)findViewById(R.id.navigation_view);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {  // 상수 값 사용
-            // 설정 버튼 클릭 시 동작
-
+        if (item.getItemId() == android.R.id.home) {// 왼쪽 상단 버튼 눌렀을 때
+            drawerLayout.openDrawer(GravityCompat.START);
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -22,7 +22,7 @@ public class Camera_list extends RecyclerView.Adapter<Camera_list.MyViewHolder> 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_camera_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.camera_list, parent, false);
         return new MyViewHolder(view);
     }
 

@@ -13,7 +13,7 @@ public class Sign_signup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_sign_signup);
+        setContentView(R.layout.sign_signup);
 
         TextView privacyPolicyText = findViewById(R.id.text_privacy_policy);
         privacyPolicyText.setOnClickListener(new View.OnClickListener() {
