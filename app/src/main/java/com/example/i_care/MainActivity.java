@@ -1,6 +1,5 @@
 package com.example.i_care;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -21,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout drawer;
+    private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
 
@@ -48,41 +47,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         // 메뉴바
-        drawer = findViewById(R.id.main);
+        drawerLayout = findViewById(R.id.main);
         navigationView = findViewById(R.id.nav_view);
-        // activity_main.xml 파일에 추가한 NavigationView 의 id 찾기.
-        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
 
-        toggle = new ActionBarDrawerToggle(this, drawer,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new HomeFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
-        }
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment = null;
-                int itemId = item.getItemId();
-                if (itemId == R.id.nav_home) {
-                    selectedFragment = new HomeFragment();
+                if (item.getItemId() == R.id.nav_home) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new HomeFragment()).commit();
                 } else {
                     Toast.makeText(MainActivity.this, "알 수 없는 메뉴 항목입니다.", Toast.LENGTH_SHORT).show();
                 }
-
-                if (selectedFragment != null) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            selectedFragment).commit();
-                }
-
-                drawer.closeDrawer(GravityCompat.START);
+                drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
@@ -98,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
