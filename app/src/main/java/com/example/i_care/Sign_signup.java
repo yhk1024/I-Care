@@ -1,5 +1,6 @@
 package com.example.i_care;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -24,5 +25,12 @@ public class Sign_signup extends AppCompatActivity {
                 privacyPolicyDialog.show(getSupportFragmentManager(), "privacyPolicyDialog");
             }
         });
+    }
+
+    // 회원가입
+    public void saveSignUp(View view) {
+        // Intent를 사용하여 다음 액티비티로 이동
+        Intent intent = new Intent(this, Sign_login.class);
+        startActivity(intent);
     }
 }

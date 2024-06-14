@@ -1,7 +1,9 @@
 package com.example.i_care;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -86,5 +88,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+
+    // 회원정보 수정을 위한 회원 확인 화면으로 이동
+    public void moveToSignEdit(View view) {
+        Intent intent = new Intent(this, Sign_edit_check.class);
+        startActivity(intent);
     }
 }
