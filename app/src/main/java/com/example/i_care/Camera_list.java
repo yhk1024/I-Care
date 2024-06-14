@@ -1,5 +1,6 @@
 package com.example.i_care;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

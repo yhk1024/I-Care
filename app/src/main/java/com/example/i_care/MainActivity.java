@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         List<CameraItem> data = new ArrayList<>();
         // 데이터를 추가합니다.
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 1; i++) {
             data.add(new CameraItem(R.drawable.ic_launcher_foreground, "카메라" + (i+1), "활성화" + (i+1)));
         }
         //카메라 목록 출력
@@ -62,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.nav_home) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            new HomeFragment()).commit();
+                    Toast.makeText(MainActivity.this, "홈 메뉴 입니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainActivity.this, "알 수 없는 메뉴 항목입니다.", Toast.LENGTH_SHORT).show();
                 }
@@ -79,15 +78,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 
 

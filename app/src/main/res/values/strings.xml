@@ -16,11 +16,14 @@
     <string name="check">확인</string>
     <string name="cancel">취소</string>
 
+    <string name="temperature">체온</string>
+
 
     <string name="navigation_drawer_open">네비게이션 드로어 열기</string>
     <string name="navigation_drawer_close">네비게이션 드로어 닫기</string>
     <string name="nav_home">홈</string>
     <string name="nav_gallery">갤러리</string>
     <string name="nav_slideshow">슬라이드쇼</string>
+    <string name="todo">TODO</string>
 
 </resources>
