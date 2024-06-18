@@ -1,5 +1,11 @@
 plugins {
     alias(libs.plugins.androidApplication)
+
+    // Add the dependency for the Google services Gradle plugin
+    // id("com.google.gms.google-services") version "4.4.2" apply false
+    // id("com.android.application")
+    // Add the Google services Gradle plugin
+    // id("com.google.gms.google-services")
 }
 
 android {
@@ -35,7 +41,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -49,4 +54,12 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // Import the Firebase BoM
+    implementation(platform(libs.firebase.bom))
+    // TODO: Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation(libs.firebase.analytics)
+    // Add the dependencies for any other desired Firebase products
+    // https://firebase.google.com/docs/android/setup#available-libraries
 }
