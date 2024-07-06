@@ -14,7 +14,11 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 public class Sign_signup extends AppCompatActivity {
 
@@ -23,7 +27,6 @@ public class Sign_signup extends AppCompatActivity {
     private EditText editTextId;
     private EditText editTextPassword;
     private Button btn_signup;
-
     private FirebaseAuth mAuth;
 
     @Override
@@ -45,52 +48,54 @@ public class Sign_signup extends AppCompatActivity {
         editTextId = findViewById(R.id.editTextId);
         editTextPassword = findViewById(R.id.editTextPassword);
         btn_signup = findViewById(R.id.btn_signup);
-
         mAuth = FirebaseAuth.getInstance();
 
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createUser();
+                String email = editTextId.getText().toString().trim();
+                String password = editTextPassword.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(Sign_signup.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(Sign_signup.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (password.length() < 6) {
+                    Toast.makeText(Sign_signup.this, "Password too short, enter minimum 6 characters", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                registerUser(email, password);
             }
         });
     }
 
-    private void createUser() {
-        String email = editTextId.getText().toString();
-        String password = editTextPassword.getText().toString();
-
-        if (TextUtils.isEmpty(email)) {
-            editTextId.setError("Email is required");
-            return;
-        }
-
-        if (TextUtils.isEmpty(password)) {
-            editTextPassword.setError("Password is required");
-            return;
-        }
-
+    private void registerUser(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Log.d(TAG, "createUserWithEmail:success");
-                        Toast.makeText(Sign_signup.this, "Account created.",
-                                Toast.LENGTH_SHORT).show();
                         FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
+                        Toast.makeText(Sign_signup.this, "Registration successful.", Toast.LENGTH_SHORT).show();
+                        // Navigate to login or main activity
                     } else {
-                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                        Toast.makeText(Sign_signup.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                        updateUI(null);
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (FirebaseAuthWeakPasswordException e) {
+                            editTextPassword.setError("Weak password.");
+                            editTextPassword.requestFocus();
+                        } catch (FirebaseAuthUserCollisionException e) {
+                            editTextId.setError("User already exists.");
+                            editTextId.requestFocus();
+                        } catch (Exception e) {
+                            Toast.makeText(Sign_signup.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
-    }
-
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            startActivity(new Intent(Sign_signup.this, MainActivity.class));
-            finish();
-        }
     }
 }

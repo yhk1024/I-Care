@@ -26,7 +26,6 @@ public class Sign_login extends AppCompatActivity {
     private EditText editTextPassword;
     private Button btn_login;
     private Button btn_signup;
-
     private FirebaseAuth mAuth;
 
     @Override
@@ -45,7 +44,6 @@ public class Sign_login extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         btn_login = findViewById(R.id.btn_login);
         btn_signup = findViewById(R.id.btn_signup);
-
         mAuth = FirebaseAuth.getInstance();
 
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +53,7 @@ public class Sign_login extends AppCompatActivity {
             }
         });
 
+        // 회원가입 페이지로 이동
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
