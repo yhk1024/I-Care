@@ -1,7 +1,10 @@
 {
   "project_info": {
     "project_number": "993736217458",
+<<<<<<< HEAD
     "firebase_url": "https://icare-acf71-default-rtdb.firebaseio.com",
+=======
+>>>>>>> origin/master
     "project_id": "icare-acf71",
     "storage_bucket": "icare-acf71.appspot.com"
   },
