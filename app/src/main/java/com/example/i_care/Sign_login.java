@@ -22,10 +22,8 @@ public class Sign_login extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
-    private EditText editTextId;
-    private EditText editTextPassword;
-    private Button btn_login;
-    private Button btn_signup;
+    private EditText emailEditText, passwordEditText;
+    private Button btn_login, btn_signup;
     private FirebaseAuth mAuth;
 
     @Override
@@ -40,8 +38,8 @@ public class Sign_login extends AppCompatActivity {
             return insets;
         });
 
-        editTextId = findViewById(R.id.editTextId);
-        editTextPassword = findViewById(R.id.editTextPassword);
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
         btn_login = findViewById(R.id.btn_login);
         btn_signup = findViewById(R.id.btn_signup);
         mAuth = FirebaseAuth.getInstance();
@@ -57,23 +55,29 @@ public class Sign_login extends AppCompatActivity {
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 이메일과 비밀번호 입력란을 지움
+                emailEditText.setText("");
+                passwordEditText.setText("");
+
+                // 회원가입 화면으로 이동
                 startActivity(new Intent(Sign_login.this, Sign_signup.class));
             }
         });
 
     }
 
+    // 로그인 확인. 이메일, 비밀번호를 제대로 적었는지 확인하는 함수.
     private void loginUser() {
-        String email = editTextId.getText().toString();
-        String password = editTextPassword.getText().toString();
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
-            editTextId.setError("Email is required");
+            emailEditText.setError("Email is required");
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            editTextPassword.setError("Password is required");
+            passwordEditText.setError("Password is required");
             return;
         }
 
@@ -85,13 +89,14 @@ public class Sign_login extends AppCompatActivity {
                         updateUI(user);
                     } else {
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        Toast.makeText(Sign_login.this, "Authentication failed.",
+                        Toast.makeText(Sign_login.this, "로그인에 실패했습니다(Authentication failed).",
                                 Toast.LENGTH_SHORT).show();
                         updateUI(null);
                     }
                 });
     }
 
+    // 로그인에 성공 시 메인 화면으로 이동
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             startActivity(new Intent(Sign_login.this, MainActivity.class));

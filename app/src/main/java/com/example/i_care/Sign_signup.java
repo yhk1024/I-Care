@@ -2,6 +2,7 @@ package com.example.i_care;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,8 +25,7 @@ public class Sign_signup extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
 
-    private EditText editTextId;
-    private EditText editTextPassword;
+    private EditText emailEditText, passwordEditText;
     private Button btn_signup;
     private FirebaseAuth mAuth;
 
@@ -45,32 +45,29 @@ public class Sign_signup extends AppCompatActivity {
             }
         });
 
-        editTextId = findViewById(R.id.editTextId);
-        editTextPassword = findViewById(R.id.editTextPassword);
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
         btn_signup = findViewById(R.id.btn_signup);
         mAuth = FirebaseAuth.getInstance();
 
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = editTextId.getText().toString().trim();
-                String password = editTextPassword.getText().toString().trim();
+                String email = emailEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(Sign_signup.this, "Enter email", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(Sign_signup.this, "Enter password", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 if (password.length() < 6) {
                     Toast.makeText(Sign_signup.this, "Password too short, enter minimum 6 characters", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 registerUser(email, password);
             }
         });
@@ -83,15 +80,26 @@ public class Sign_signup extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
                         Toast.makeText(Sign_signup.this, "Registration successful.", Toast.LENGTH_SHORT).show();
                         // Navigate to login or main activity
+
+                        // 1초 뒤 뒤로 뒤로 가기
+                        new Handler().postDelayed(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                //딜레이 후 시작할 코드 작성
+                                finish();
+                            }
+                        }, 1000);// 1초 정도 딜레이를 준 후 시작
                     } else {
                         try {
                             throw Objects.requireNonNull(task.getException());
                         } catch (FirebaseAuthWeakPasswordException e) {
-                            editTextPassword.setError("Weak password.");
-                            editTextPassword.requestFocus();
+                            passwordEditText.setError("Weak password.");
+                            passwordEditText.requestFocus();
                         } catch (FirebaseAuthUserCollisionException e) {
-                            editTextId.setError("User already exists.");
-                            editTextId.requestFocus();
+                            emailEditText.setError("User already exists.");
+                            emailEditText.requestFocus();
                         } catch (Exception e) {
                             Toast.makeText(Sign_signup.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }

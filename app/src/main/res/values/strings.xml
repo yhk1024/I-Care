@@ -3,6 +3,7 @@
     <string name="sign_login">로그인</string>
     <string name="sign_signUp">회원가입</string>
     <string name="sign_id">아이디</string>
+    <string name="sign_idCheck">중복확인</string>
     <string name="sign_pw">비밀번호</string>
     <string name="sign_rePw">비밀번호 재확인</string>
     <string name="sign_phone">전화번호</string>
