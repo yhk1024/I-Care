@@ -15,6 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ICare"
         tools:targetApi="31">
+        <!--  firebase 메시지 보내기 , 부팅 모드 실행  -->
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false"
+            android:directBootAware="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <activity
             android:name=".Camera_item"
             android:exported="false" />
@@ -46,7 +55,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
