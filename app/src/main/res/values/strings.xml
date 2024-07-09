@@ -20,7 +20,6 @@
 
     <string name="temperature">체온</string>
 
-
     <string name="navigation_drawer_open">네비게이션 드로어 열기</string>
     <string name="navigation_drawer_close">네비게이션 드로어 닫기</string>
     <string name="nav_home">홈</string>
@@ -28,5 +27,8 @@
     <string name="nav_slideshow">슬라이드쇼</string>
     <string name="todo">TODO</string>
     <string name="logo">LOGO</string>
+
+    <string name="default_notification_channel_id">알림</string>
+    <string name="notification_title" />
 
 </resources>

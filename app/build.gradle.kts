@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
+    alias(libs.plugins.jetbrainsKotlinAndroid)
 }
 
 android {
@@ -34,6 +35,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
 
 dependencies {
@@ -49,6 +53,7 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.drawerlayout)
     implementation(libs.firebase.auth)
+    implementation(libs.core.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
