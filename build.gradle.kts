@@ -4,5 +4,4 @@ plugins {
     // Add this line for the google services plugin
     id("com.google.gms.google-services") version "4.4.2" apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
-
 }
