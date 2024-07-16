@@ -29,6 +29,7 @@ public class Sign_edit_check extends AppCompatActivity {
         // Intent를 사용하여 다음 액티비티로 이동
         Intent intent = new Intent(this, Sign_edit.class);
         startActivity(intent);
+        finish();
     }
 
     // 취소 버튼을 누르면 뒤로 가기
