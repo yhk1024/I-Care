@@ -52,11 +52,13 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.drawerlayout)
-    implementation(libs.firebase.auth)
     implementation(libs.core.ktx)
+    implementation(libs.work.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    implementation(libs.firebase.auth)
 
     // Import the Firebase BoM
     implementation(platform(libs.firebase.bom))

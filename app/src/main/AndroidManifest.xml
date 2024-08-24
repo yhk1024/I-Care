@@ -4,6 +4,8 @@
 
     <!--  인터넷 사용 권한  -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--  알림 런타임 권한  -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:allowBackup="true"
@@ -24,6 +26,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".Camera_item"
             android:exported="false" />
