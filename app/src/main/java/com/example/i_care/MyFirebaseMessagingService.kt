@@ -26,22 +26,30 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "From: ${remoteMessage.from}")
 
         // Check if message contains a data payload.
+        // 메시지에 데이터 페이로드가 포함되어 있는지 확인합니다.
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
 
             // Check if data needs to be processed by long running job
+            // 데이터가 장기 실행 작업에서 처리되어야 하는지 확인
             if (needsToBeScheduled()) {
                 // For long-running tasks (10 seconds or more) use WorkManager.
+                // 장기 실행 작업(10초 이상)의 경우 WorkManager를 사용합니다.
                 scheduleJob()
             } else {
                 // Handle message within 10 seconds
+                // 10초 이내에 메시지를 처리합니다.
                 handleNow()
             }
         }
 
         // Check if message contains a notification payload.
+        // 메시지에 알림 페이로드가 포함되어 있는지 확인합니다.
         remoteMessage.notification?.let {
             Log.d(TAG, "Message Notification Body: ${it.body}")
+
+            //it.body => 알림 내용
+            sendNotification(it.body.toString())
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
