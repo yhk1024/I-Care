@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">I-Care</string>
+
     <string name="sign_login">로그인</string>
     <string name="sign_signUp">회원가입</string>
     <string name="sign_id">아이디</string>
@@ -11,6 +12,9 @@
     <string name="sign_email">이메일</string>
     <string name="sign_check">회원정보</string>
     <string name="sign_edit">회원정보 수정</string>
+    
+    <string name="privacyPolicy">개인정보 처리 방침 동의</string>
+    <string name="privacyPolicyDialog">개인정보 수집 및 이용 방침</string>
 
     <string name="camera_list">카메라 목록</string>
     <string name="btn_add">+</string>
@@ -27,8 +31,5 @@
     <string name="nav_slideshow">슬라이드쇼</string>
     <string name="todo">TODO</string>
     <string name="logo">LOGO</string>
-
-    <string name="default_notification_channel_id">알림</string>
-    <string name="notification_title" />
 
 </resources>
