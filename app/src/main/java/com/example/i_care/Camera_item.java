@@ -28,8 +28,6 @@ public class Camera_item extends AppCompatActivity {
             return insets;
         });
 
-        Log.d("tag : " , "msg");
-
         TextView showTemperature = findViewById(R.id.showTemperature);
         VideoView mVideoView = findViewById(R.id.videoView);    // 비디오 뷰 아이디 연결
 
@@ -48,7 +46,6 @@ public class Camera_item extends AppCompatActivity {
 
 
         // 일정 시간 지난 후, 아기 체온 변화
-        // 1초 뒤 뒤로 뒤로 가기
         new Handler().postDelayed(new Runnable()
         {
             @Override
@@ -56,7 +53,6 @@ public class Camera_item extends AppCompatActivity {
             {
                 //딜레이 후 시작할 코드 작성
                 //아기 체온 변화
-                Log.d("tag : " , "msg2");
                 showTemperature.setText(R.string.tem_2);
             }
         }, 6000);// 1초 정도 딜레이를 준 후 시작
