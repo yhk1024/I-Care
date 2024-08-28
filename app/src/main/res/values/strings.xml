@@ -23,6 +23,8 @@
     <string name="cancel">취소</string>
 
     <string name="temperature">체온</string>
+    <string name="tem_1">37.5</string>
+    <string name="tem_2">38.7</string>
 
     <string name="navigation_drawer_open">네비게이션 드로어 열기</string>
     <string name="navigation_drawer_close">네비게이션 드로어 닫기</string>

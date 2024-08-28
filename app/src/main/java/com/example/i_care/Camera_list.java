@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class Camera_list extends RecyclerView.Adapter<Camera_list.MyViewHolder> {
+public class Camera_list extends RecyclerView.Adapter<Camera_list.ViewHolder> {
 
-    private List<CameraItem> mData;
+    private final List<CameraItem> mData;
 
     public Camera_list(List<CameraItem> data) {
         this.mData = data;
@@ -22,13 +22,14 @@ public class Camera_list extends RecyclerView.Adapter<Camera_list.MyViewHolder> 
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.camera_list, parent, false);
-        return new MyViewHolder(view);
+
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CameraItem item = mData.get(position);
         holder.camera_img.setImageResource(item.getCamImg());
         holder.camera_name.setText(item.getCamName());
@@ -40,17 +41,27 @@ public class Camera_list extends RecyclerView.Adapter<Camera_list.MyViewHolder> 
         return mData.size();
     }
 
-    static class MyViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView camera_img;
         TextView camera_name;
         TextView camera_status;
 
-        MyViewHolder(View itemView) {
+        // 여기에 버튼 클릭 이벤트 추가
+        ViewHolder(View itemView) {
             super(itemView);
             camera_img = itemView.findViewById(R.id.camera_img);
             camera_name = itemView.findViewById(R.id.camera_name);
             camera_status = itemView.findViewById(R.id.camera_status);
 
+            // 회원가입 페이지로 이동
+            camera_img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 회원가입 화면으로 이동
+                    Intent intent = new Intent(itemView.getContext(), Camera_item.class);
+                    itemView.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }
