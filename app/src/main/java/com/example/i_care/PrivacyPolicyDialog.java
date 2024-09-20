@@ -14,9 +14,9 @@ public class PrivacyPolicyDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("개인정보 처리방침")
-                .setMessage("여기에 개인정보 처리방침 내용을 작성하세요.")
-                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.privacyPolicy)
+                .setMessage(R.string.privacyPolicyDialog)
+                .setPositiveButton(R.string.check, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // 확인 버튼을 눌렀을 때의 동작
                     }
