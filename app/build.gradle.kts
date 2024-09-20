@@ -72,4 +72,8 @@ dependencies {
 
     implementation(libs.firebase.messaging)
 //    implementation(libs.firebase.messaging.directboot)
+
+    // AWS SDK 및 S3 의존성 추가
+    implementation(libs.aws.android.sdk.core)
+    implementation(libs.aws.android.sdk.s3)
 }

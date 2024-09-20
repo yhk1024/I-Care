@@ -3,9 +3,9 @@ package com.example.i_care;
 
 // RecyclerView 리스트 항목에 들어갈 데이터를 담는 클래스
 public class CameraItem {
-    private int camera_img;
-    private String camera_name;
-    private String camera_status;
+    private final int camera_img;
+    private final String camera_name;
+    private final String camera_status;
 
     public CameraItem(int imageResId, String text1, String text2) {
         this.camera_img = imageResId;
