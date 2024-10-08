@@ -15,14 +15,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
-
-import java.net.URL;
-import java.util.Date;
-
 public class Camera_item extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
