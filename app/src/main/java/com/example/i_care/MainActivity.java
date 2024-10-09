@@ -22,7 +22,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
+
+    private RecyclerView recyclerView;
+    private MyAdapter adapter;
+    private ArrayList<String> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,27 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        // 리스트에 데이터 추가
+        recyclerView = findViewById(R.id.recyclerView);
+
+        // 역순으로 데이터를 배치하기 위해 LinearLayoutManager 설정
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);  // 데이터를 역순으로 추가
+        layoutManager.setStackFromEnd(true);   // 새 데이터가 상단에 추가됨
+        recyclerView.setLayoutManager(layoutManager);
+
+        // 데이터 리스트 초기화 및 어댑터 설정
+        dataList = new ArrayList<>();
+        adapter = new MyAdapter(dataList);
+        recyclerView.setAdapter(adapter);
+
+        // 임의의 데이터 추가 예시
+        addData("첫 번째 데이터");
+        addData("두 번째 데이터");
+        addData("세 번째 데이터");
+
+        /*
+
         //카메라 목록 추가
         RecyclerView recyclerView = findViewById(R.id.camera_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -68,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         //카메라 목록 출력
         Camera_list adapter = new Camera_list(data);
         recyclerView.setAdapter(adapter);
+
+         */
 
 
         // 메뉴바
@@ -94,6 +120,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // 데이터 추가 함수
+    private void addData(String newData) {
+        dataList.add(0, newData);  // 리스트의 가장 위에 데이터 추가
+        adapter.notifyItemInserted(0);
+        recyclerView.scrollToPosition(0);  // 추가된 데이터를 보기 위해 상단으로 스크롤
+    }
+
+    // 메뉴 아이템 추가
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (toggle.onOptionsItemSelected(item)) {

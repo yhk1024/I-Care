@@ -33,7 +33,8 @@ public class Camera_item extends AppCompatActivity {
         TextView showTemperature = findViewById(R.id.showTemperature);
         VideoView mVideoView = findViewById(R.id.videoView);    // 비디오 뷰 아이디 연결
 
-        Uri uri = Uri.parse("http://3.214.87.90/videos/icare_video.mp4");
+//        Uri uri = Uri.parse("http://3.214.87.90/videos/icare_video.mp4");
+        Uri uri = Uri.parse("http://172.16.42.154");
 
         Log.d("videoUri : " , String.valueOf(uri));
 

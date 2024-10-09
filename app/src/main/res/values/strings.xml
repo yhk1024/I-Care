@@ -25,6 +25,10 @@
 
     <string name="camera_list">카메라 목록</string>
     <string name="btn_add">+</string>
+    <string name="camera_item">카메라</string>
+    <string name="camera_active">작동 중</string>
+    <string name="camera_item_01">카메라01</string>
+
 
     <string name="check">확인</string>
     <string name="cancel">취소</string>
