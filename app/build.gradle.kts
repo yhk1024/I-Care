@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.drawerlayout)
     implementation(libs.core.ktx)
     implementation(libs.work.runtime.ktx)
+    implementation(libs.cronet.embedded)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

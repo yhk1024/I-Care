@@ -21,6 +21,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.chromium.base.task.AsyncTask;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -58,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        // 서버에서 데이터를 가져오기
+        new GetDataFromServer().executeOnExecutor(SERVER_URL);
 
         // 리스트에 데이터 추가
         recyclerView = findViewById(R.id.recyclerView);
@@ -136,10 +147,67 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // 회원가입 화면으로 이동
+    public void moveToCamera(View view) {
+        Intent intent = new Intent(this, Camera_item.class);
+        startActivity(intent);
+    }
 
     // 회원정보 수정을 위한 회원 확인 화면으로 이동
     public void moveToSignEdit(View view) {
         Intent intent = new Intent(this, Sign_edit_check.class);
         startActivity(intent);
+    }
+
+    // AsyncTask로 서버와 통신
+    private class GetDataFromServer extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String serverUrl = params[0];
+            try {
+                // 서버에 GET 요청 보내기
+                URL url = new URL(serverUrl);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setConnectTimeout(5000); // 타임아웃 5초
+                urlConnection.setReadTimeout(5000);
+
+                int responseCode = urlConnection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) { // 200 OK
+                    BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String inputLine;
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+                    return response.toString();  // 서버에서 받은 응답 반환
+                } else {
+                    Log.e("HTTP_ERROR", "응답 코드: " + responseCode);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null) {
+                try {
+                    // JSON 파싱 (예시로 서버에서 {"message": "Hello World"}와 같은 응답이 올 때)
+                    JSONObject jsonObject = new JSONObject(result);
+                    String message = jsonObject.getString("message");
+
+                    // 화면에 데이터를 표시
+                    Log.d("TAG Message : ", message);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

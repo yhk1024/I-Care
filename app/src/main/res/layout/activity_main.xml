@@ -11,7 +11,7 @@
     <!-- Main Content -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <!-- Your existing LinearLayout -->
         <LinearLayout
@@ -35,10 +35,10 @@
                 android:text="@string/camera_list"
                 android:textSize="34sp" />
 
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/camera_list"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content" />-->
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/camera_list"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,6 +59,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="#2196F3"
                     android:contentDescription="@string/camera_item_01"
+                    android:onClick="moveToCamera"
                     android:src="@android:drawable/ic_menu_camera" />
 
                 <LinearLayout
@@ -110,12 +111,12 @@
             </LinearLayout>
 
             <!--            <Button-->
-<!--                android:id="@+id/btn_add_camera"-->
-<!--                android:layout_width="320dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_margin="20dp"-->
-<!--                android:text="@string/btn_add" />-->
+            <!--                android:id="@+id/btn_add_camera"-->
+            <!--                android:layout_width="320dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_gravity="center"-->
+            <!--                android:layout_margin="20dp"-->
+            <!--                android:text="@string/btn_add" />-->
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
