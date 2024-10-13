@@ -77,4 +77,7 @@ dependencies {
     // AWS SDK 및 S3 의존성 추가
     implementation(libs.aws.android.sdk.core)
     implementation(libs.aws.android.sdk.s3)
+
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+    implementation(libs.okhttp)
 }

@@ -14,9 +14,9 @@ import java.util.List;
 
 public class Camera_list extends RecyclerView.Adapter<Camera_list.ViewHolder> {
 
-    private final List<CameraItem> mData;
+    private final List<Camera_add> mData;
 
-    public Camera_list(List<CameraItem> data) {
+    public Camera_list(List<Camera_add> data) {
         this.mData = data;
     }
 
@@ -30,7 +30,7 @@ public class Camera_list extends RecyclerView.Adapter<Camera_list.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CameraItem item = mData.get(position);
+        Camera_add item = mData.get(position);
         holder.camera_img.setImageResource(item.getCamImg());
         holder.camera_name.setText(item.getCamName());
         holder.camera_status.setText(item.getCamStatus());

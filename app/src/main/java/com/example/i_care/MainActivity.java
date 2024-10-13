@@ -1,10 +1,16 @@
 package com.example.i_care;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -16,59 +22,60 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.common.api.Response;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.chromium.base.task.AsyncTask;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+import okhttp3.OkHttpClient;
+import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
+import okhttp3.Request;
+import okio.ByteString;
 
+
+public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
 
+    // 서버에서 받아온 데이터 보여주기
     private RecyclerView recyclerView;
     private MyAdapter adapter;
     private ArrayList<String> dataList;
 
+
+    private static final String SERVER_URL = "ws://192.168.0.9:8001";  // Jetson 서버의 WebSocket URL
+    private ImageView imageView;
+    private TextView temperatureTextView;
+    private WebSocket webSocket;
+    private Handler handler = new Handler(Looper.getMainLooper());
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //기기 토큰 확인 하는 함수
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w("MyFirebaseMsgService: ", "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
-
-                        // Get new FCM registration token
-                        String token = task.getResult();
-
-                        // Log and toast
-                        String msg = "Refreshed token: " + token;
-                        Log.d("MyFirebaseMsgService: ", msg);
-                    }
-                });
+        fbToken();
 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // 서버에서 데이터를 가져오기
-        new GetDataFromServer().executeOnExecutor(SERVER_URL);
+        //데이터 보여주기
+        imageView = findViewById(R.id.imageView);
+        temperatureTextView = findViewById(R.id.temperatureTextView);
+
+//        ServerConnect C = new ServerConnect();
+//        C.connectWebSocket(SERVER_URL, webSocket, handler, temperatureTextView, imageView);
+
+        // WebSocket 연결 시작
+        connectWebSocket();
 
         // 리스트에 데이터 추가
         recyclerView = findViewById(R.id.recyclerView);
@@ -89,23 +96,8 @@ public class MainActivity extends AppCompatActivity {
         addData("두 번째 데이터");
         addData("세 번째 데이터");
 
-        /*
-
-        //카메라 목록 추가
-        RecyclerView recyclerView = findViewById(R.id.camera_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        List<CameraItem> data = new ArrayList<>();
-        // 데이터를 추가합니다.
-        for (int i = 0; i < 1; i++) {
-            data.add(new CameraItem(R.drawable.ic_launcher_foreground, "카메라" + (i+1), "활성화" + (i+1)));
-        }
-        //카메라 목록 출력
-        Camera_list adapter = new Camera_list(data);
-        recyclerView.setAdapter(adapter);
-
-         */
-
+//        카메라 추가
+//        cameraAdd();
 
         // 메뉴바
         drawerLayout = findViewById(R.id.main);
@@ -130,6 +122,51 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    private void connectWebSocket() {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(SERVER_URL).build();
+
+        webSocket = client.newWebSocket(request, new WebSocketListener() {
+            @Override
+            public void onOpen(WebSocket webSocket, okhttp3.Response response) {
+                Log.d("WebSocket", "서버 연결 성공");  // 서버 연결 성공 로그
+            }
+
+            @Override
+            public void onMessage(WebSocket webSocket, String text) {
+                // 수신된 메시지가 텍스트(체온 데이터)인 경우
+                if (text.startsWith("temperature:")) {
+                    String temperature = text.split(":")[1];
+                    handler.post(() -> temperatureTextView.setText("체온: " + temperature + "°C"));
+                }
+            }
+
+            @Override
+            public void onMessage(WebSocket webSocket, ByteString bytes) {
+                // 수신된 메시지가 바이너리(영상 데이터)인 경우
+                byte[] data = bytes.toByteArray();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+
+                // 메인 스레드에서 UI 업데이트
+                handler.post(() -> imageView.setImageBitmap(bitmap));
+            }
+
+            @Override
+            public void onFailure(WebSocket webSocket, Throwable t, okhttp3.Response response) {
+                Log.e("WebSocket", "연결 실패: " + t.getMessage());
+            }
+
+            @Override
+            public void onClosed(WebSocket webSocket, int code, String reason) {
+                Log.d("WebSocket", "연결 종료: " + reason);
+            }
+        });
+
+        client.dispatcher().executorService().shutdown();
+    }
+
 
     // 데이터 추가 함수
     private void addData(String newData) {
@@ -159,55 +196,42 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // AsyncTask로 서버와 통신
-    private class GetDataFromServer extends AsyncTask<String, Void, String> {
 
-        @Override
-        protected String doInBackground(String... params) {
-            String serverUrl = params[0];
-            try {
-                // 서버에 GET 요청 보내기
-                URL url = new URL(serverUrl);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.setConnectTimeout(5000); // 타임아웃 5초
-                urlConnection.setReadTimeout(5000);
+    //기기 토큰 확인 하는 함수
+    public void fbToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("MyFirebaseMsgService: ", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
 
-                int responseCode = urlConnection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) { // 200 OK
-                    BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    StringBuilder response = new StringBuilder();
-                    String inputLine;
+                        // Get new FCM registration token
+                        String token = task.getResult();
 
-                    while ((inputLine = in.readLine()) != null) {
-                        response.append(inputLine);
+                        // Log and toast
+                        String msg = "Refreshed token: " + token;
+                        Log.d("MyFirebaseMsgService: ", msg);
                     }
-                    in.close();
-                    return response.toString();  // 서버에서 받은 응답 반환
-                } else {
-                    Log.e("HTTP_ERROR", "응답 코드: " + responseCode);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                try {
-                    // JSON 파싱 (예시로 서버에서 {"message": "Hello World"}와 같은 응답이 올 때)
-                    JSONObject jsonObject = new JSONObject(result);
-                    String message = jsonObject.getString("message");
-
-                    // 화면에 데이터를 표시
-                    Log.d("TAG Message : ", message);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+                });
     }
+
+    
+    //카메라 추가
+//    public void cameraAdd() {
+//        //카메라 목록 추가
+//        RecyclerView recyclerView = findViewById(R.id.camera_list);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//
+//        List<Camera_add> data = new ArrayList<>();
+//        // 데이터를 추가합니다.
+//        for (int i = 0; i < 1; i++) {
+//            data.add(new Camera_add(R.drawable.ic_launcher_foreground, "카메라" + (i+1), "활성화" + (i+1)));
+//        }
+//        //카메라 목록 출력
+//        Camera_list adapter = new Camera_list(data);
+//        recyclerView.setAdapter(adapter);
+//    }
 }
