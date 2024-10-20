@@ -1,16 +1,10 @@
 package com.example.i_care;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -22,22 +16,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.common.api.Response;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Objects;
-
-import okhttp3.OkHttpClient;
-import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
-import okhttp3.Request;
-import okio.ByteString;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,13 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> dataList;
 
 
-    private static final String SERVER_URL = "ws://192.168.0.9:8001";  // Jetson 서버의 WebSocket URL
-    private ImageView imageView;
-    private TextView temperatureTextView;
-    private WebSocket webSocket;
-    private Handler handler = new Handler(Looper.getMainLooper());
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //기기 토큰 확인 하는 함수
@@ -67,17 +45,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        //데이터 보여주기
-        imageView = findViewById(R.id.imageView);
-        temperatureTextView = findViewById(R.id.temperatureTextView);
 
-//        ServerConnect C = new ServerConnect();
-//        C.connectWebSocket(SERVER_URL, webSocket, handler, temperatureTextView, imageView);
-
-        // WebSocket 연결 시작
-        connectWebSocket();
-
-        // 리스트에 데이터 추가
+        // 리스트에 데이터 추가(과거 오류 데이터)
         recyclerView = findViewById(R.id.recyclerView);
 
         // 역순으로 데이터를 배치하기 위해 LinearLayoutManager 설정
@@ -124,50 +93,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void connectWebSocket() {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(SERVER_URL).build();
-
-        webSocket = client.newWebSocket(request, new WebSocketListener() {
-            @Override
-            public void onOpen(WebSocket webSocket, okhttp3.Response response) {
-                Log.d("WebSocket", "서버 연결 성공");  // 서버 연결 성공 로그
-            }
-
-            @Override
-            public void onMessage(WebSocket webSocket, String text) {
-                // 수신된 메시지가 텍스트(체온 데이터)인 경우
-                if (text.startsWith("temperature:")) {
-                    String temperature = text.split(":")[1];
-                    handler.post(() -> temperatureTextView.setText("체온: " + temperature + "°C"));
-                }
-            }
-
-            @Override
-            public void onMessage(WebSocket webSocket, ByteString bytes) {
-                // 수신된 메시지가 바이너리(영상 데이터)인 경우
-                byte[] data = bytes.toByteArray();
-                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-
-                // 메인 스레드에서 UI 업데이트
-                handler.post(() -> imageView.setImageBitmap(bitmap));
-            }
-
-            @Override
-            public void onFailure(WebSocket webSocket, Throwable t, okhttp3.Response response) {
-                Log.e("WebSocket", "연결 실패: " + t.getMessage());
-            }
-
-            @Override
-            public void onClosed(WebSocket webSocket, int code, String reason) {
-                Log.d("WebSocket", "연결 종료: " + reason);
-            }
-        });
-
-        client.dispatcher().executorService().shutdown();
-    }
-
-
     // 데이터 추가 함수
     private void addData(String newData) {
         dataList.add(0, newData);  // 리스트의 가장 위에 데이터 추가
@@ -184,16 +109,19 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // 회원가입 화면으로 이동
-    public void moveToCamera(View view) {
-        Intent intent = new Intent(this, Camera_item.class);
-        startActivity(intent);
-    }
+    // 화면 이동 함수
+    public void moveToPage(View view) {
+        int v_id = view.getId();
 
-    // 회원정보 수정을 위한 회원 확인 화면으로 이동
-    public void moveToSignEdit(View view) {
-        Intent intent = new Intent(this, Sign_edit_check.class);
-        startActivity(intent);
+        if(v_id == R.id.camera_img) {
+            // 클릭한 버튼이 카메라 버튼일 경우, 카메라 영상 확인 화면으로 이동
+            Intent intent = new Intent(this, Camera_item.class);
+            startActivity(intent);
+        } else if(v_id == R.id.btn_sign_edit) {
+            // 클릭한 버튼이 회원 수정 버튼일 경우, 회원 인증 화면으로 이동
+            Intent intent = new Intent(this, Sign_edit_check.class);
+            startActivity(intent);
+        }
     }
 
 
@@ -218,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    
+
     //카메라 추가
 //    public void cameraAdd() {
 //        //카메라 목록 추가

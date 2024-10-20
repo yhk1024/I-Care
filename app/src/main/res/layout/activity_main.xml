@@ -59,7 +59,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="#2196F3"
                     android:contentDescription="@string/camera_item_01"
-                    android:onClick="moveToCamera"
+                    android:onClick="moveToPage"
                     android:src="@android:drawable/ic_menu_camera" />
 
                 <LinearLayout
@@ -102,21 +102,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/temperatureTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="체온 데이터 대기 중..."
-                    android:textSize="20sp"
-                    android:layout_marginBottom="20dp" />
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:scaleType="centerCrop"
-                    android:contentDescription="영상 표시" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"

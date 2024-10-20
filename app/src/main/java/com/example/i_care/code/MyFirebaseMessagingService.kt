@@ -1,4 +1,4 @@
-package com.example.i_care
+package com.example.i_care.code
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,6 +13,8 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.example.i_care.MainActivity
+import com.example.i_care.R
 //import com.google.firebase.example.messaging.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
