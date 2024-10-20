@@ -61,37 +61,6 @@ public class Camera_item extends AppCompatActivity {
 //        ServerConnect serverConnect = new ServerConnect();
 //        serverConnect.connectWebSocket(temperatureTextView, videoImageView);
         connectWebSocket();
-
-//        TextView showTemperature = findViewById(R.id.showTemperature);
-//        VideoView mVideoView = findViewById(R.id.videoView);    // 비디오 뷰 아이디 연결
-//
-////        Uri uri = Uri.parse("http://3.214.87.90/videos/icare_video.mp4");
-//        Uri uri = Uri.parse("http://172.16.42.154");
-//
-//        Log.d("videoUri : " , String.valueOf(uri));
-//
-//        // 재생이나 정지와 같은 미디어 제어 버튼부를 담당
-//        MediaController mediaController = new MediaController(this);
-//        mediaController.setAnchorView(mVideoView);
-//        // 미디어 제어 버튼부 세팅
-//        mVideoView.setMediaController(mediaController);
-//
-//        mVideoView.setVideoURI(uri);    // 미디어 뷰 주소 설정
-//        mVideoView.requestFocus();
-//        mVideoView.start();
-//
-//
-//        // 일정 시간 지난 후, 아기 체온 변화
-//        new Handler().postDelayed(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                //딜레이 후 시작할 코드 작성
-//                //아기 체온 변화
-//                showTemperature.setText(R.string.tem_2);
-//            }
-//        }, 6000);// 1초 정도 딜레이를 준 후 시작
     }
 
     // WebSocket 서버에 연결
@@ -166,6 +135,7 @@ public class Camera_item extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (webSocket != null) {
+            Log.d("WebSocket", "Activity destroyed");
             webSocket.close(1000, "Activity destroyed");
         }
     }
@@ -174,6 +144,7 @@ public class Camera_item extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         if (webSocket != null) {
+            Log.d("WebSocket", "Activity paused");
             webSocket.close(1000, "Activity paused");
         }
     }
