@@ -22,8 +22,6 @@ public class Camera_item extends AppCompatActivity {
     private TextView temperatureTextView;
     private ImageView videoImageView;
 
-    private MultiWebSocketManager multiWebSocketManager;
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +41,6 @@ public class Camera_item extends AppCompatActivity {
 
         // WebSocketManager 초기화
         webSocketManager = new WebSocketManager();
-
-        // MultiWebSocketManager 초기화
-        multiWebSocketManager = new MultiWebSocketManager();
     }
 
 
@@ -53,33 +48,6 @@ public class Camera_item extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         webSocketManager.connectWebSocket(temperatureTextView, videoImageView);
-
-        // 각각의 포트에 대해 WebSocket 연결 시작
-//        multiWebSocketManager.connectWebSocket1(temperatureTextView, videoImageView); // 포트 8765
-//        multiWebSocketManager.connectWebSocket2(temperatureTextView, videoImageView); // 포트 8766
-    }
-
-    // 화면을 떠날 때 WebSocket 연결 해제
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        webSocketManager.disconnectWebSocket();
-
-//        multiWebSocketManager.disconnectAll();
-    }
-
-    // 사용자가 액티비티를 완전히 떠나거나, 앱이 종료될 때 호출
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-//        // WebSocket 연결 해제
-        webSocketManager.disconnectWebSocket();
-
-        // 모든 WebSocket 연결 해제
-//        multiWebSocketManager.disconnectAll();
     }
 }

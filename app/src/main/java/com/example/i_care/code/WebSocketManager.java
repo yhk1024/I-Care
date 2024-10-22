@@ -15,6 +15,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;
@@ -127,6 +129,76 @@ public class WebSocketManager {
             @Override
             public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
                 Log.d("WebSocket", "연결 종료: " + reason);
+            }
+        });
+
+        // WebSocket이 작업을 완료할 때 호출하여 자원을 해제
+        client.dispatcher().executorService().shutdown();
+    }
+
+
+    public void connectWebSocket2(List<String> temperatureHistory) {
+        OkHttpClient client = new OkHttpClient();
+
+        // WebSocket 요청 생성
+        Request request = new Request.Builder().url(SERVER_URL).build();
+
+        // WebSocket 연결 및 데이터 수신 설정
+        webSocket = client.newWebSocket(request, new WebSocketListener() {
+
+            @Override
+            public void onOpen(@NonNull WebSocket webSocket, @NonNull okhttp3.Response response) {
+                Log.d("WebSocket2", "서버 연결 성공");
+            }
+
+            // 서버로부터 받은 메시지 처리 (JSON 형식의 텍스트 메시지)
+            // 체온 정보와 영상 정보를 받아온다.
+            @Override
+            public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
+                Log.d("WebSocket2", "서버에서 받은 메시지: " + text);
+
+                // 메시지가 JSON 형식인지 확인
+                if (isJSONValid(text)) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(text);
+
+                        // 체온 정보 처리
+                        if (jsonObject.has("value")) {
+                            String temperature = jsonObject.getString("value");
+
+                            handler.post(() -> temperatureHistory.add(0, temperature));
+                        }
+
+                    } catch (JSONException e) {
+                        Log.e("WebSocket2", "JSON 파싱 오류: " + e.getMessage());
+                    }
+                } else {
+                    // JSON 형식이 아닌 메시지 처리
+                    Log.d("WebSocket2", "JSON 형식이 아닌 메시지: " + text);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, okhttp3.Response response) {
+                // 연결 실패 이유를 로그로 출력
+                Log.e("WebSocket2", "연결 실패", t);  // t 객체를 통해 예외 스택 추적을 로그로 남김
+
+                if (response != null) {
+                    // 서버로부터 받은 응답이 있는 경우, 상태 코드와 메시지를 로그로 출력
+                    Log.e("WebSocket2", "응답 코드: " + response.code());
+                    Log.e("WebSocket2", "응답 메시지: " + response.message());
+                } else {
+                    // 서버 응답이 없으면 요청이 서버에 도달하지 않았을 가능성 (네트워크 문제 등)
+                    Log.e("WebSocket2", "서버 응답 없음 (네트워크 문제일 가능성)");
+                }
+
+                // 5초 후 재연결 시도
+                handler.postDelayed(() -> connectWebSocket2(temperatureHistory), 5000);
+            }
+
+            @Override
+            public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
+                Log.d("WebSocket2", "연결 종료: " + reason);
             }
         });
 

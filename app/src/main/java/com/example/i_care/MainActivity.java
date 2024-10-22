@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.i_care.code.TemperatureAdapter;
+import com.example.i_care.code.WebSocketManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -37,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private Random random;
     private Handler handler = new Handler();
 
+    // WebSocket
+    private WebSocketManager webSocketManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         // Toolbar를 ActionBar로 설정
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        // WebSocketManager 초기화
+        webSocketManager = new WebSocketManager();
 
 
         // 리스트에 데이터 추가(과거 오류 데이터)
@@ -71,7 +81,28 @@ public class MainActivity extends AppCompatActivity {
         random = new Random();
 
         // 5초마다 랜덤 체온 생성 및 추가
-        startTemperatureGeneration();
+//        startTemperatureGeneration();
+    }
+
+
+    // 화면에 다시 들어왔을 때 WebSocket 연결
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        webSocketManager.connectWebSocket2(temperatureHistory);
+        // SharedPreferences에 저장된 데이터를 업데이트
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_HISTORY, String.join(",", temperatureHistory));  // 리스트를 쉼표로 구분하여 저장
+        editor.apply();  // SharedPreferences에 적용
+    }
+
+    // 사용자가 액티비티를 완전히 떠나거나, 앱이 종료될 때 호출
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // WebSocket 연결 해제
+        webSocketManager.disconnectWebSocket();
     }
 
 
@@ -86,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 5000);
     }
-
     // 랜덤 체온 생성 및 RecyclerView에 추가
     private void generateRandomTemperature() {
         double randomTemperature = 36.0 + (random.nextDouble() * 2.0); // 36.0°C ~ 38.0°C
@@ -98,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
         // 생성된 체온을 저장
         saveTemperature(temperatureString);
     }
-
     // 과거 데이터를 SharedPreferences에서 불러오는 메서드
     private List<String> loadTemperatureHistory() {
         String savedHistory = sharedPreferences.getString(KEY_HISTORY, "");
@@ -111,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
 
         return historyList;  // 과거 데이터 반환
     }
-
     // 생성된 체온 데이터를 SharedPreferences에 저장하는 메서드
     private void saveTemperature(String temperature) {
         temperatureHistory.add(0, temperature);  // 최신 데이터를 리스트의 맨 앞에 추가
