@@ -28,6 +28,7 @@
     <string name="camera_item">카메라</string>
     <string name="camera_active">작동 중</string>
     <string name="camera_item_01">카메라01</string>
+    <string name="camera_video_view">카메라 영상 확인</string>
 
 
     <string name="check">확인</string>
