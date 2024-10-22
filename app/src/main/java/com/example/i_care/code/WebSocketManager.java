@@ -87,24 +87,24 @@ public class WebSocketManager {
             }
 
             // 영상 정보 처리
-            @Override
-            public void onMessage(@NonNull WebSocket webSocket, @NonNull ByteString bytes) {
-                // 계속해서 바이너리 데이터를 로그로 출력
-                Log.d("WebSocket", "서버에서 영상 데이터 수신 중");
-                Log.d("WebSocket", "서버에서 받은 바이너리 메시지 (길이): " + bytes.size());
-
-                // 바이너리 데이터를 Base64로 인코딩하여 로그에 출력 (크기가 크지 않을 때)
-                String base64Data = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
-                Log.d("WebSocket", "Base64로 인코딩된 바이너리 데이터: " + base64Data);
-
-                // 바이너리 데이터를 영상으로 처리 (Bitmap으로 변환)
-                // 바이너리 데이터를 Bitmap으로 변환하여 영상 처리
-                byte[] data = bytes.toByteArray();
-                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-
-                // 메인 스레드에서 UI 업데이트 (영상 표시)
-                handler.post(() -> videoImageView.setImageBitmap(bitmap));
-            }
+//            @Override
+//            public void onMessage(@NonNull WebSocket webSocket, @NonNull ByteString bytes) {
+//                // 계속해서 바이너리 데이터를 로그로 출력
+//                Log.d("WebSocket", "서버에서 영상 데이터 수신 중");
+//                Log.d("WebSocket", "서버에서 받은 바이너리 메시지 (길이): " + bytes.size());
+//
+//                // 바이너리 데이터를 Base64로 인코딩하여 로그에 출력 (크기가 크지 않을 때)
+//                String base64Data = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
+//                Log.d("WebSocket", "Base64로 인코딩된 바이너리 데이터: " + base64Data);
+//
+//                // 바이너리 데이터를 영상으로 처리 (Bitmap으로 변환)
+//                // 바이너리 데이터를 Bitmap으로 변환하여 영상 처리
+//                byte[] data = bytes.toByteArray();
+//                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+//
+//                // 메인 스레드에서 UI 업데이트 (영상 표시)
+//                handler.post(() -> videoImageView.setImageBitmap(bitmap));
+//            }
 
             @Override
             public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, okhttp3.Response response) {

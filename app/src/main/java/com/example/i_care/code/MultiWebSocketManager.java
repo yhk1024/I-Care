@@ -66,21 +66,21 @@ public class MultiWebSocketManager {
                 Log.d("WebSocket1", "서버에서 영상 데이터 수신 중 (포트 " + port1 + ")");
 
                 // 받아온 영상 정보 처리
-                videoContent(bytes, videoImageView);
+//                videoContent(bytes, videoImageView);
             }
 
             @Override
             public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, okhttp3.Response response) {
                 // 연결 실패 이유를 로그로 출력
-                Log.e("WebSocket", "연결 실패", t);  // t 객체를 통해 예외 스택 추적을 로그로 남김
+                Log.e("WebSocket1", "연결 실패", t);  // t 객체를 통해 예외 스택 추적을 로그로 남김
 
                 if (response != null) {
                     // 서버로부터 받은 응답이 있는 경우, 상태 코드와 메시지를 로그로 출력
-                    Log.e("WebSocket", "응답 코드: " + response.code());
-                    Log.e("WebSocket", "응답 메시지: " + response.message());
+                    Log.e("WebSocket1", "응답 코드: " + response.code());
+                    Log.e("WebSocket1", "응답 메시지: " + response.message());
                 } else {
                     // 서버 응답이 없으면 요청이 서버에 도달하지 않았을 가능성 (네트워크 문제 등)
-                    Log.e("WebSocket", "서버 응답 없음 (네트워크 문제일 가능성)");
+                    Log.e("WebSocket1", "서버 응답 없음 (네트워크 문제일 가능성)");
                 }
 
                 // 5초 후 재연결 시도
@@ -124,21 +124,21 @@ public class MultiWebSocketManager {
                 Log.d("WebSocket2", "서버에서 영상 데이터 수신 중 (포트 " + port2 + ")");
 
                 // 받아온 영상 정보 처리
-                videoContent(bytes, videoImageView);
+//                videoContent(bytes, videoImageView);
             }
 
             @Override
             public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, okhttp3.Response response) {
                 // 연결 실패 이유를 로그로 출력
-                Log.e("WebSocket", "연결 실패", t);  // t 객체를 통해 예외 스택 추적을 로그로 남김
+                Log.e("WebSocket2", "연결 실패", t);  // t 객체를 통해 예외 스택 추적을 로그로 남김
 
                 if (response != null) {
                     // 서버로부터 받은 응답이 있는 경우, 상태 코드와 메시지를 로그로 출력
-                    Log.e("WebSocket", "응답 코드: " + response.code());
-                    Log.e("WebSocket", "응답 메시지: " + response.message());
+                    Log.e("WebSocket2", "응답 코드: " + response.code());
+                    Log.e("WebSocket2", "응답 메시지: " + response.message());
                 } else {
                     // 서버 응답이 없으면 요청이 서버에 도달하지 않았을 가능성 (네트워크 문제 등)
-                    Log.e("WebSocket", "서버 응답 없음 (네트워크 문제일 가능성)");
+                    Log.e("WebSocket2", "서버 응답 없음 (네트워크 문제일 가능성)");
                 }
 
                 // 5초 후 재연결 시도
@@ -191,7 +191,7 @@ public class MultiWebSocketManager {
                     handler.post(() -> temperatureTextView.setText(tem_msg));
                 }
 
-                // 영상 데이터 처리 (Base64로 인코딩된 영상)
+                // 영상 데이터 처리 (Base64로 인코딩된 JPG)
                 if (jsonObject.has("video")) {
                     String base64Video = jsonObject.getString("video");
 
