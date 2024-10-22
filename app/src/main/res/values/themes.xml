@@ -1,11 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ICare" parent="Theme.AppCompat.Light.DarkActionBar">
+<!--    <style name="Base.Theme.ICare" parent="Theme.AppCompat.Light.DarkActionBar">-->
+<!--    <style name="Base.Theme.ICare" parent="Theme.Material3.DayNight.NoActionBar">-->
 <!--    <style name="Base.Theme.ICare" parent="Theme.AppCompat.Light.NoActionBar">-->
-
+    <style name="Base.Theme.ICare" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- 액션바 배경색 -->
+        <!-- 기본 색상 -->
         <item name="colorPrimary">@color/main_color</item>
+
+        <!-- NoActionBar 설정으로 기본 ActionBar 제거 -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Theme.ICare" parent="Base.Theme.ICare" />
