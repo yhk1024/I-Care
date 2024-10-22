@@ -1,161 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sign_up"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/sign_signUp"
-        android:textSize="48sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+    <!-- Toolbar 추가 -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:title="@string/app_name"
+        android:titleTextColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.006" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
+        android:padding="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:layout_editor_absoluteX="-16dp">
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/idEditText"-->
-<!--                android:layout_width="245dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:autofillHints="name"-->
-<!--                android:ems="10"-->
-<!--                android:hint="@string/sign_id"-->
-<!--                android:inputType="text" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/button"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="@string/sign_idCheck" />-->
-<!--        </LinearLayout>-->
-
-        <EditText
-            android:id="@+id/emailEditText"
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:autofillHints="emailAddress"
-            android:ems="10"
-            android:hint="@string/sign_email"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/passwordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:autofillHints="password"
-            android:ems="10"
-            android:hint="@string/sign_pw"
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/passwordCheckEditText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:autofillHints="password"
-            android:ems="10"
-            android:hint="@string/sign_rePw"
-            android:inputType="textPassword" />
-
-<!--        <EditText-->
-<!--            android:id="@+id/pwdEditText"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:autofillHints="password"-->
-<!--            android:ems="10"-->
-<!--            android:hint="@string/sign_rePw"-->
-<!--            android:inputType="textPassword" />-->
-
-        <EditText
-            android:id="@+id/editTextText4"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:autofillHints="phone"
-            android:ems="10"
-            android:hint="@string/sign_phone"
-            android:inputType="phone" />
-
-        <EditText
-            android:id="@+id/camSerialNumEditText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:autofillHints="camera Serial Number"
-            android:ems="10"
-            android:hint="@string/sign_camSerial"
-            android:inputType="number" />
+            android:layout_height="wrap_content"
+            android:text="@string/sign_signUp"
+            android:textSize="48sp"
+            android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/linearLayout"
+            android:layout_width="340dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="50dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.0">
 
-            <CheckBox
-                android:id="@+id/checkbox_privacy"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
+            <EditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="emailAddress"
+                android:ems="10"
+                android:hint="@string/sign_email"
+                android:inputType="textEmailAddress" />
 
-            <TextView
-                android:id="@+id/text_privacy_policy"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/privacyPolicy"
-                android:textAllCaps="false"
-                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="password"
+                android:ems="10"
+                android:hint="@string/sign_pw"
+                android:inputType="textPassword" />
 
-        </LinearLayout>
+            <EditText
+                android:id="@+id/passwordCheckEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="password"
+                android:ems="10"
+                android:hint="@string/sign_rePw"
+                android:inputType="textPassword" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="60dp"
-            android:gravity="bottom"
-            android:orientation="horizontal">
+            <!--        <EditText-->
+            <!--            android:id="@+id/pwdEditText"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="50dp"-->
+            <!--            android:autofillHints="password"-->
+            <!--            android:ems="10"-->
+            <!--            android:hint="@string/sign_rePw"-->
+            <!--            android:inputType="textPassword" />-->
 
-            <Button
-                android:id="@+id/btn_signup"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/editTextText4"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="phone"
+                android:ems="10"
+                android:hint="@string/sign_phone"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/camSerialNumEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="camera Serial Number"
+                android:ems="10"
+                android:hint="@string/sign_camSerial"
+                android:inputType="number" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="@string/sign_signUp"
-                style="?android:attr/absListViewStyle" />
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_cancel"
-                style="?android:attr/absListViewStyle"
-                android:layout_width="wrap_content"
+                <CheckBox
+                    android:id="@+id/checkbox_privacy"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/text_privacy_policy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/privacyPolicy"
+                    android:textAllCaps="false"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:onClick="moveToBack"
-                android:text="@string/cancel" />
+                android:layout_marginTop="60dp"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/sign_signUp"
+                    style="?android:attr/absListViewStyle" />
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    style="?android:attr/absListViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:onClick="moveToBack"
+                    android:text="@string/cancel" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

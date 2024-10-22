@@ -5,15 +5,28 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Camera_item">
+    tools:context=".Camera_item"
+    android:fitsSystemWindows="true">
+
+    <!-- Toolbar 추가 -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:title="@string/app_name"
+        android:titleTextColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical"
+        android:padding="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,16 +43,16 @@
                 android:id="@+id/temperatureTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:text="@string/temperature"
-                android:textSize="20sp"
-                android:layout_marginBottom="20dp" />
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/videoImageView"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/video" />
+                android:layout_width="800dp"
+                android:layout_height="800dp"
+                android:contentDescription="@string/video"
+                android:scaleType="centerCrop" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
