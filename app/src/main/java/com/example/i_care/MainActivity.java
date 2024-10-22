@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 리스트에 데이터 추가(과거 오류 데이터)
         // RecyclerView 초기화
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.item_temperature);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // SharedPreferences 초기화
@@ -105,32 +106,20 @@ public class MainActivity extends AppCompatActivity {
 
         if (!savedHistory.isEmpty()) {
             String[] savedTemps = savedHistory.split(",");
-            for (String temp : savedTemps) {
-                historyList.add(temp);
-            }
+            historyList.addAll(Arrays.asList(savedTemps));  // 과거 데이터를 리스트에 추가
         }
 
-        // 최대 10개의 데이터만 유지
-        while (historyList.size() > 10) {
-            historyList.remove(0);
-        }
-
-        return historyList;
+        return historyList;  // 과거 데이터 반환
     }
 
     // 생성된 체온 데이터를 SharedPreferences에 저장하는 메서드
     private void saveTemperature(String temperature) {
-        temperatureHistory.add(0, temperature);
+        temperatureHistory.add(0, temperature);  // 최신 데이터를 리스트의 맨 앞에 추가
 
-        // 최대 10개의 데이터만 유지
-        if (temperatureHistory.size() > 10) {
-            temperatureHistory.remove(temperatureHistory.size() - 1);
-        }
-
-        // 데이터를 SharedPreferences에 저장
+        // SharedPreferences에 저장된 데이터를 업데이트
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_HISTORY, String.join(",", temperatureHistory));
-        editor.apply();
+        editor.putString(KEY_HISTORY, String.join(",", temperatureHistory));  // 리스트를 쉼표로 구분하여 저장
+        editor.apply();  // SharedPreferences에 적용
     }
 
 

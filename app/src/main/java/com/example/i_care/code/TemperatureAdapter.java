@@ -52,14 +52,17 @@ public class TemperatureAdapter extends RecyclerView.Adapter<TemperatureAdapter.
         }
     }
 
-    // 데이터 추가 시 RecyclerView 업데이트
+    // 새로운 데이터를 상단에 추가하는 메서드
     public void addTemperature(String temperature) {
-        // 가장 위에 추가
+        // 리스트의 가장 위에 새로운 데이터를 추가
         temperatureList.add(0, temperature);
-        // 최대 10개의 데이터만 유지
+
+        // 최대 10개의 데이터만 유지 (오래된 데이터는 삭제)
         if (temperatureList.size() > 10) {
             temperatureList.remove(temperatureList.size() - 1);
         }
+
+        // 데이터가 변경되었음을 어댑터에 알림 (RecyclerView 새로고침)
         notifyDataSetChanged();
     }
 }

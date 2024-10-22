@@ -223,12 +223,13 @@
                     tools:ignore="NestedWeights" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                    android:id="@+id/item_temperature"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="7"
-                    android:scrollbars="vertical" />
+                    android:scrollbars="vertical">
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
 
         </LinearLayout>
